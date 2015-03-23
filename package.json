@@ -1,0 +1,9 @@
+{
+  "name": "troll_serv",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "multer": "*",
+    "ws": "*"
+  }
+}
