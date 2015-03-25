@@ -1,17 +1,36 @@
 /*Define dependencies.*/
 
-var express=require("express")
+var express = require("express")
+  , http = require("http")
   , multer  = require('multer')
-  , app=express()
-  , done=false
-  , WebSocketServer = require('ws').Server
-  , wss = new WebSocketServer({ port: 3001 });
+  , app = express()
+  , done = false
+  , WebSocketServer = require('ws').Server;
+
+var port = process.env.PORT || 5000;
+
+app.use(express.static(__dirname + "/"));
+
+var server = http.createServer(app);
+
+var wss = new WebSocketServer({server: server});
 
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     client.send(data);
   });
 };
+
+wss.on("connection", function(ws) {
+  console.log("websocket connection open")
+  ws.on("message", function(message) {
+    ws.send(message);
+  });
+  ws.on("close", function() {
+    console.log("websocket connection close");
+  })
+})
+
 /*Configure the multer.*/
 
 app.use(multer({ dest: './uploads/',
@@ -36,12 +55,15 @@ app.get('/',function(req,res){
 app.post('/api/photo',function(req,res){
   if(done==true){
     console.log(req.files);
-    wss.broadcast(req.files);
+    wss.broadcast(req.files.userPhoto.path);
     res.end("File uploaded.");
   }
 });
 
 /*Run the server.*/
-app.listen(3000,function(){
-    console.log("Working on port 3000");
+server.listen(port, function () {
+  console.log("http server listening on %d", port)
 });
+//app.listen(3000,function(){
+//    console.log("Working on port 3000");
+//});

@@ -2,19 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
-  <script>
-    var WebSocket = require('ws');
-    var ws = new WebSocket('ws://www.host.com/path');
+  <title>Trolololoooooool</title>
+  <style>
+    #imagelist {
+      list-style:none;
+    }
 
-    ws.on('open', function open() {
-      ws.send('something');
-    });
+    #imagelist li {
+      width: 250px;
+      margin:15px;
+      display:inline-block;
+      -moz-transition: opacity 1s;
+      transition: opacity 1s;
+    }
 
-    ws.on('message', function(data, flags) {
-      console.log(data);
-    });
-  </script>
+    #imagelist img {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
   <form id     =  "uploadForm"
@@ -26,9 +31,31 @@
   <input type="submit" value="Upload Image" name="submit">
   </form>
   <div>
-    <ul>
+    <ul id="imagelist">
 
     </ul>
   </div>
+  <script>
+    var imagelist = document.getElementById('imagelist');
+    var ws = new WebSocket('ws://localhost:5000');
+
+    ws.onopen = function open() {
+      console.log('open');
+      ws.send('something');
+    };
+
+    ws.onmessage = function(data, flags) {
+      console.log(data);
+      if(data.data.substr(0, 6) == "upload") {
+        var img = document.createElement('img');
+        img.src = data.data;
+        var li = document.createElement('li');
+        li.appendChild(img);
+        imagelist.appendChild(li);
+        li.style.opacity = 0;
+        li.style.opacity = 1;
+      }
+    };
+  </script>
 </body>
 </html>
