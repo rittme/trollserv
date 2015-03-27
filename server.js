@@ -7,7 +7,7 @@ var express = require("express")
   , done = false
   , WebSocketServer = require('ws').Server;
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 80;
 
 app.use(express.static(__dirname + "/"));
 
