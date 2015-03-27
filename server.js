@@ -61,7 +61,7 @@ app.get('/',function(req,res){
 app.post('/api/photo',function(req,res){
   if(done==true){
     console.log(req.files);
-    wss.broadcast(req.files.userPhoto.path);
+    wss.broadcast(req.files.user_photo.path);
     res.end("File uploaded.");
   }
 });

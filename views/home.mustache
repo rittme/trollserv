@@ -40,8 +40,7 @@
     var ws = new WebSocket('{{socketURL}}');
 
     ws.onopen = function open() {
-      console.log('open');
-      ws.send('something');
+      ws.send('hello');
     };
 
     ws.onmessage = function(data, flags) {
