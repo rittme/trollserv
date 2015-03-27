@@ -10,6 +10,10 @@ var express = require("express")
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
+app.set('views', __dirname + '/views'); // tell express which directory your views are in
+app.set('view engine', 'mustache');     // name your templates
+app.engine('mustache', require('hogan-middleware').__express); // register the engine
+
 app.use(express.static(__dirname + "/"));
 
 var server = http.createServer(app);
@@ -50,7 +54,8 @@ app.use(multer({ dest: './uploads/',
 /*Handling routes.*/
 
 app.get('/',function(req,res){
-      res.sendfile("index.html");
+  res.render('home', { socketURL: 'ws://' + ip_address + ":" + port});
+  //res.sendfile("index.html");
 });
 
 app.post('/api/photo',function(req,res){
