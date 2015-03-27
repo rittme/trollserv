@@ -63,5 +63,5 @@ app.post('/api/photo',function(req,res){
 
 /*Run the server.*/
 server.listen(port, ip_address, function () {
-  console.log("Listening on " + server_ip_address + ", server_port " + port);
+  console.log("Listening on " + ip_address + ", server_port " + port);
 });
