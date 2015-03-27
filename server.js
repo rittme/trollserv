@@ -7,7 +7,8 @@ var express = require("express")
   , done = false
   , WebSocketServer = require('ws').Server;
 
-var port = process.env.PORT || 80;
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 app.use(express.static(__dirname + "/"));
 
@@ -61,6 +62,6 @@ app.post('/api/photo',function(req,res){
 });
 
 /*Run the server.*/
-server.listen(port, function () {
-  console.log("http server listening on %d", port)
+server.listen(port, ip_address, function () {
+  console.log("Listening on " + server_ip_address + ", server_port " + port);
 });
