@@ -64,6 +64,3 @@ app.post('/api/photo',function(req,res){
 server.listen(port, function () {
   console.log("http server listening on %d", port)
 });
-//app.listen(3000,function(){
-//    console.log("Working on port 3000");
-//});
