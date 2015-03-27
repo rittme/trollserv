@@ -54,7 +54,7 @@ app.use(multer({ dest: './uploads/',
 /*Handling routes.*/
 
 app.get('/',function(req,res){
-  res.render('home', { socketURL: 'ws://' + ip_address + ":" + port});
+  res.render('home', { socketURL: ip_address});
   //res.sendfile("index.html");
 });
 

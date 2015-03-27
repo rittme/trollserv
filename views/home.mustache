@@ -37,7 +37,7 @@
   </div>
   <script>
     var imagelist = document.getElementById('imagelist');
-    var ws = new WebSocket('{{socketURL}}');
+    var ws = new WebSocket('ws://{{socketURL}}:80');
 
     ws.onopen = function open() {
       console.log('open');
