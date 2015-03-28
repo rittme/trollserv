@@ -65,7 +65,7 @@
             imagelist.innerHTML = httpRequest.responseText;
         }
       };
-      httpRequest.open('GET', 'http://{{socketURL}}/filelist/', true);
+      httpRequest.open('GET', 'filelist', true);
       httpRequest.send(null);
     });
   </script>
