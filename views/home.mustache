@@ -30,6 +30,7 @@
   <input type="file" name="userPhoto" />
   <input type="submit" value="Upload Image" name="submit">
   </form>
+  <button id="showOld">Show old</button>
   <div>
     <ul id="imagelist">
 
@@ -37,7 +38,7 @@
   </div>
   <script>
     var imagelist = document.getElementById('imagelist');
-    var ws = new WebSocket('{{socketURL}}');
+    var ws = new WebSocket('ws://{{socketURL}}');
 
     ws.onopen = function open() {
       ws.send('hello');
@@ -55,6 +56,18 @@
         li.style.opacity = 1;
       }
     };
+
+    var showOld = document.getElementById('showOld');
+    showOld.addEventListener('click', function(e) {
+      var httpRequest = new XMLHttpRequest();
+      httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4 && httpRequest.status === 200) {
+            imagelist.innerHTML = httpRequest.responseText;
+        }
+      };
+      httpRequest.open('GET', 'http://{{socketURL}}/filelist/', true);
+      httpRequest.send(null);
+    });
   </script>
 </body>
 </html>
